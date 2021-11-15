@@ -36,7 +36,6 @@ paytmParams["INDUSTRY_TYPE_ID"] = process.env.PAYTM_INDUSTRY_TYPE_ID;
 paytmParams["ORDER_ID"] = uuid();
 paytmParams["CUST_ID"] = process.env.PAYTM_CUST_ID;
 paytmParams["TXN_AMOUNT"] = "100";
-paytmParams["CALLBACK_URL"] =
-  "https://flipkartclone-server.herokuapp.com/callback";
+paytmParams["CALLBACK_URL"] = "/callback";
 paytmParams["EMAIL"] = "prabakaranpkv@gmail.com";
 paytmParams["MOBILE_NO"] = "1234567898";
