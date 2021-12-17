@@ -24,22 +24,22 @@ export const paymentResponse = (request, response) => {
   let paytmCheckSum = request.body.CHECKSUMHASH;
   delete request.body.CHECKSUMHASH;
 
-  let isVerifySignature = PaytmChecksum.verifySignature(
-    request.body,
-    "bKMfNxPPf_QdZppa",
+  var isVerifySignature = PaytmChecksum.verifySignature(
+    paytmParams,
+    paytmMerchantKey,
     paytmCheckSum
   );
 
   if (isVerifySignature) {
     paytmParams["MID"] = request.body.MID;
-    paytmParams["ORDERID"] = request.body.ORDERID;
+    paytmParams["ORDER_ID"] = request.body.ORDERID;
 
-    PaytmChecksum.generateSignature(paytmParams, "bKMfNxPPf_QdZppa").then(
+    PaytmChecksum.generateSignature(paytmParams, paytmMerchantKey).then(
       function (checksum) {
         paytmParams["CHECKSUMHASH"] = checksum;
 
-        let post_data = JSON.stringify(paytmParams);
-        let options = {
+        var post_data = JSON.stringify(paytmParams);
+        var options = {
           hostname: "securegw-stage.paytm.in",
           port: 443,
           path: "/order/status",
@@ -50,16 +50,16 @@ export const paymentResponse = (request, response) => {
           },
         };
 
-        let res = "";
+        var res = "";
 
-        let post_req = https.request(options, function (post_res) {
+        var post_req = https.request(options, function (post_res) {
           post_res.on("data", function (chunk) {
             res += chunk;
           });
 
           post_res.on("end", function () {
             let result = JSON.parse(res);
-            response.redirect(`https://flipkartclone-client.netlify.app`);
+            response.redirect(`http://localhost:3000/`);
           });
         });
         post_req.write(post_data);
