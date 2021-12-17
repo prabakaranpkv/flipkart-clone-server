@@ -59,7 +59,7 @@ export const paymentResponse = (request, response) => {
 
           post_res.on("end", function () {
             let result = JSON.parse(res);
-            response.redirect(`http://localhost:3000/`);
+            response.redirect(`https://flipkartclone-client.netlify.app/`);
           });
         });
         post_req.write(post_data);
